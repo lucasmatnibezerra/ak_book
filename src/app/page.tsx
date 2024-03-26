@@ -131,7 +131,7 @@ export default function Home() {
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-black sm:text-4xl">
               Meet the team
             </p>
-            <h2 className="text-3xl font-semibold mb-2">Meet The Team</h2>
+
             <p className="text-gray-600">
               The team at LASSE is made up of visionaries who believe in
               changing the world by...

@@ -55,16 +55,19 @@ const teamMembers = [
 export const courses = [
   {
     title: "Machine Learning",
+    description: "",
     link: "https://stripe.com",
     icon: <BrainCircuit size={100} />,
   },
   {
     title: "Digital Signal Processing",
+    description: "",
     link: "https://netflix.com",
     icon: <Radio size={100} />,
   },
   {
     title: "Deep Learning",
+    description: "",
     link: "https://google.com",
     icon: <BrainCog size={100} />,
   },

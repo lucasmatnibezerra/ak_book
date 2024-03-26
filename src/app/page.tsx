@@ -52,7 +52,7 @@ const teamMembers = [
   },
   // ...outros membros da equipe
 ];
-export const courses = [
+const courses = [
   {
     title: "Machine Learning",
     description: "",

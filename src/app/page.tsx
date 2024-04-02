@@ -50,7 +50,6 @@ const teamMembers = [
     role: "Student",
     imageSrc: "/ValdineiConceicao.webp",
   },
-  // ...outros membros da equipe
 ];
 const courses = [
   {
@@ -62,7 +61,7 @@ const courses = [
   {
     title: "Digital Signal Processing",
     description: "",
-    link: "https://netflix.com",
+    link: "/digital-signal-processing",
     icon: <Radio size={100} />,
   },
   {
@@ -93,7 +92,11 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <Button className={buttonVariants()}>
-                <span>Start reading</span>
+                <span>
+                  <a href="https://ai6g.org/books/dsp/ak_dsp_book.html">
+                    Start reading
+                  </a>
+                </span>
                 <ArrowUpRight size={20} />
               </Button>
             </div>
@@ -157,7 +160,6 @@ export default function Home() {
           </div>
         </div>
       </MaxWidthWrapper>
-      <Footer />
     </>
   );
 }

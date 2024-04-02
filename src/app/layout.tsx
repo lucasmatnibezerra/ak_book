@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Literata as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
+import Navbar from "@/components/navbar";
+import Footer from "@/components/Footer";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

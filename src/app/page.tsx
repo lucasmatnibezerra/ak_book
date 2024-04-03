@@ -2,14 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  BrainCircuit,
-  BrainCog,
-  Radio,
-  SatelliteDish,
-  Signal,
-} from "lucide-react";
+import { ArrowUpRight, BrainCircuit, BrainCog, Radio } from "lucide-react";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
@@ -49,6 +42,13 @@ const teamMembers = [
     description: "Computer engineering student at UFPA and researcher at LASSE",
     role: "Student",
     imageSrc: "/ValdineiConceicao.webp",
+  },
+  {
+    name: "Lucas Matni",
+    description:
+      "Master's student in Electrical engineering at UFPA and researcher at LASSE",
+    role: "Student",
+    imageSrc: "/lucasmatni.png",
   },
 ];
 const courses = [
@@ -141,15 +141,19 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex justify-center space-x-6 overflow-hidden mt-8">
+          <div className="flex flex-wrap justify-center space-x-0 md:space-x-6 overflow-hidden mt-8">
             {teamMembers.map((member) => (
-              <div key={member.name} className="flex flex-col items-center">
+              <div
+                key={member.name}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 flex flex-col items-center"
+              >
                 <div className="w-48 h-48 bg-gray-200 rounded-full overflow-hidden">
                   <Image
                     src={member.imageSrc}
                     alt={member.name}
                     width={192}
                     height={192}
+                    layout="responsive"
                   />
                 </div>
                 <h3 className="font-semibold mt-4 text-black">{member.name}</h3>

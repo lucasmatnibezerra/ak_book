@@ -24,11 +24,11 @@ const teamMembers = [
     imageSrc: "/leo-1.webp",
   },
   {
-    name: "João Vitor",
+    name: "João Ferreira",
     role: "Student",
     description:
       "Telecommunications engineering student at UFPA and researcher at LASSE",
-    imageSrc: "/jv.webp",
+    imageSrc: "/jvictorferreira.jpeg",
   },
   {
     name: "Eduardo Guedes",

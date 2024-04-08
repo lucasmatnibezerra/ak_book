@@ -1,7 +1,9 @@
+import ML from "@/components/ml";
+
 const MachineLearning = () => {
   return (
     <div>
-      <h1>Machine Learning</h1>
+      <ML />
     </div>
   );
 };

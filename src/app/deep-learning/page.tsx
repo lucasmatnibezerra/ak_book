@@ -1,7 +1,9 @@
+import DL from "@/components/dl";
+
 const DeepLearning = () => {
   return (
     <div>
-      <h1>Deep Learning</h1>
+      <DL />
     </div>
   );
 };

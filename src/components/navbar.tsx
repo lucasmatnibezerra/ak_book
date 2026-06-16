@@ -1,164 +1,159 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuContent,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import Image from "next/image";
-import { Menu } from "lucide-react";
-
-const components: { title: string; href: string }[] = [
-  {
-    title: "Digital Signal Processing",
-    href: "/digital-signal-processing",
-  },
-  {
-    title: "Machine Learning",
-    href: "/machine-learning",
-  },
-  {
-    title: "Deep Learning",
-    href: "/deep-learning",
-  },
-  {
-    title: "Telecom",
-    href: "/telecom",
-  },
-];
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
-  return (
-    <header className="flex h-16 w-full shrink-0 items-center justify-center px-4 md:px-6 sticky z-50 inset-x-0 top-0 bg-[#ffffff]">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button className="lg:hidden" size="icon" variant="outline">
-            <MenuIcon />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left">
-          <MountainIcon />
-          <span className="sr-only">LASSE</span>
-          <div className="grid gap-2 py-6">
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="/"
-            >
-              Home
-            </Link>
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="https://www.lasse.ufpa.br/"
-            >
-              LASSE
-            </Link>
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="/machine-learning"
-            >
-              Machine Learning
-            </Link>
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="/deep-learning"
-            >
-              Deep Learning
-            </Link>
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="/digital-signal-processing"
-            >
-              Digital Signal Processing
-            </Link>
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="#"
-            >
-              Telecom
-            </Link>
+  const pathname = usePathname();
+  const { dict } = useLanguage();
 
-            <Link
-              className="flex w-full items-center py-2 text-lg font-semibold"
-              href="#"
+  const courseLinks = [
+    { title: dict.nav.dsp, href: "/digital-signal-processing" },
+    { title: dict.nav.ml, href: "/machine-learning" },
+    { title: dict.nav.dl, href: "/deep-learning" },
+    { title: dict.nav.dc, href: "/digital-communications" },
+  ];
+
+  const allLinks = [{ title: dict.nav.home, href: "/" }, ...courseLinks];
+
+  return (
+    <header className="sticky inset-x-0 top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
+      <MaxWidthWrapper>
+        <div className="flex h-16 items-center justify-between gap-4">
+          <Link href="/" className="flex shrink-0 items-center gap-2">
+            <Image src="/lasse.png" width={28} height={28} alt="LASSE logo" className="h-7 w-7" />
+            <span className="font-serif text-lg font-medium tracking-tight text-foreground">AI6G</span>
+          </Link>
+
+          <NavigationMenu className="hidden lg:flex">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/"
+                    className={cn(
+                      "inline-flex h-9 items-center rounded-full px-3 text-sm font-medium transition-colors",
+                      pathname === "/" ? "text-primary" : "text-foreground/70 hover:text-foreground"
+                    )}
+                  >
+                    {dict.nav.home}
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="h-9 bg-transparent px-3 text-sm font-medium text-foreground/70 data-[state=open]:text-foreground">
+                  {dict.nav.courses}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[260px] gap-1 p-2">
+                    {courseLinks.map((link) => (
+                      <li key={link.href}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={link.href}
+                            className={cn(
+                              "block rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                              pathname === link.href
+                                ? "bg-accent text-accent-foreground"
+                                : "text-foreground/80 hover:bg-secondary"
+                            )}
+                          >
+                            {link.title}
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <div className="hidden items-center gap-1 lg:flex">
+            <a
+              href="https://www.lasse.ufpa.br/en/contact"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="px-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
             >
-              Contact
-            </Link>
+              {dict.nav.contact}
+            </a>
+            <Button asChild size="sm" variant="outline">
+              <a href="https://www.lasse.ufpa.br/" target="_blank" rel="noreferrer noopener">
+                LASSE
+                <ArrowUpRight size={16} />
+              </a>
+            </Button>
+            <LanguageToggle />
           </div>
-        </SheetContent>
-      </Sheet>
 
-      <NavigationMenu className="hidden lg:flex  justify-center">
-        <NavigationMenuList>
-          <NavigationMenuLink asChild>
-            <Link
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-              href="/"
-            >
-              Home
-            </Link>
-          </NavigationMenuLink>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink asChild>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {components.map((component) => (
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button className="lg:hidden" size="icon" variant="outline">
+                <Menu size={20} />
+                <span className="sr-only">{dict.nav.toggleMenu}</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col">
+              <Link href="/" className="flex items-center gap-2">
+                <Image src="/lasse.png" width={28} height={28} alt="LASSE logo" className="h-7 w-7" />
+                <span className="font-serif text-lg font-medium text-foreground">AI6G</span>
+              </Link>
+              <div className="mt-6 grid gap-1">
+                {allLinks.map((link) => (
+                  <SheetClose asChild key={link.href}>
                     <Link
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
+                      href={link.href}
+                      className={cn(
+                        "rounded-lg px-3 py-2.5 text-base font-medium transition-colors",
+                        pathname === link.href
+                          ? "bg-accent text-accent-foreground"
+                          : "text-foreground/80 hover:bg-secondary"
+                      )}
                     >
-                      {component.title}
+                      {link.title}
                     </Link>
-                  ))}
-                </ul>
-              </NavigationMenuLink>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <MountainIcon />
-          <span className="sr-only">Acme Inc</span>
-          <NavigationMenuLink asChild>
-            <Link
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-              href="https://www.lasse.ufpa.br/"
-            >
-              LASSE
-            </Link>
-          </NavigationMenuLink>
-          <NavigationMenuLink asChild></NavigationMenuLink>
-          <NavigationMenuLink asChild>
-            <Link
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-              href="#"
-            >
-              Contact
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuList>
-      </NavigationMenu>
+                  </SheetClose>
+                ))}
+                <a
+                  href="https://www.lasse.ufpa.br/en/contact"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="mt-2 flex items-center rounded-lg px-3 py-2.5 text-base font-medium text-foreground/80 hover:bg-secondary"
+                >
+                  {dict.nav.contact}
+                </a>
+                <a
+                  href="https://www.lasse.ufpa.br/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex items-center gap-1 rounded-lg px-3 py-2.5 text-base font-medium text-foreground/80 hover:bg-secondary"
+                >
+                  LASSE
+                  <ArrowUpRight size={16} />
+                </a>
+                <LanguageToggle className="mt-2 w-fit" />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </MaxWidthWrapper>
     </header>
-  );
-}
-
-function MenuIcon() {
-  return <Menu size={20} className="h-6 w-6" />;
-}
-
-function MountainIcon() {
-  return (
-    <Image
-      src="/lasse.png"
-      width={30}
-      height={30}
-      alt="logo"
-      className="h-6 w-6"
-    />
   );
 }

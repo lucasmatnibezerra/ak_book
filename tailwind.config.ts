@@ -20,6 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
+        serif: ["var(--font-serif)", ...fontFamily.serif],
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       colors: {
@@ -48,6 +49,10 @@ const config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        accent2: {
+          DEFAULT: "hsl(var(--accent2))",
+          foreground: "hsl(var(--accent2-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -61,6 +66,11 @@ const config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        soft: "0 1px 2px 0 rgb(20 14 11 / 0.04), 0 8px 24px -8px rgb(20 14 11 / 0.10)",
+        "soft-lg":
+          "0 2px 4px 0 rgb(20 14 11 / 0.04), 0 16px 40px -12px rgb(20 14 11 / 0.16)",
       },
       keyframes: {
         "accordion-down": {

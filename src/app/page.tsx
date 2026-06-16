@@ -1,169 +1,81 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight, BrainCircuit, BrainCog, Radio } from "lucide-react";
+import { BrainCircuit, BrainCog, Radio, SatelliteDish } from "lucide-react";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { HoverEffect } from "@/components/ui/card-hover-effect";
-import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import SectionHeading from "@/components/SectionHeading";
+import { CourseGrid, type Course } from "@/components/CourseCard";
+import TeamSection, { type TeamMember } from "@/components/TeamSection";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const teamMembers = [
-  {
-    name: "Prof. Aldebaro Klautau",
-    role: "Coordinator",
-    description:
-      "Ph. D. University of California at San Diego (UCSD) and Full Professor at the Federal University of Pará (UFPA)",
-    imageSrc: "/aldebaro.webp",
-  },
-  {
-    name: "Prof. Leonardo Ramalho",
-    role: "Coordinator",
-    description:
-      "Ph. D. Federal University of Pará (UFPA) Professor and Vice-Director of the Faculty of Computer Engineering",
-    imageSrc: "/leo-1.webp",
-  },
-  {
-    name: "João Ferreira",
-    role: "Student",
-    description:
-      "Telecommunications engineering student at UFPA and researcher at LASSE",
-    imageSrc: "/jvictorferreira.jpeg",
-  },
-  {
-    name: "Eduardo Guedes",
-    role: "Student",
-    description:
-      "Electrical engineering student at UFPA and researcher at LASSE",
-    imageSrc: "/eduardo.webp",
-  },
-  {
-    name: "Valdinei Conceição",
-    description: "Computer engineering student at UFPA and researcher at LASSE",
-    role: "Student",
-    imageSrc: "/ValdineiConceicao.webp",
-  },
-  {
-    name: "Lucas Matni",
-    description:
-      "Master's student in Electrical engineering at UFPA and researcher at LASSE",
-    role: "Student",
-    imageSrc: "/lucasmatni.png",
-  },
-];
-const courses = [
-  {
-    title: "Machine Learning",
-    description: "",
-    link: "https://stripe.com",
-    icon: <BrainCircuit size={100} />,
-  },
-  {
-    title: "Digital Signal Processing",
-    description: "",
-    link: "/digital-signal-processing",
-    icon: <Radio size={100} />,
-  },
-  {
-    title: "Deep Learning",
-    description: "",
-    link: "https://google.com",
-    icon: <BrainCog size={100} />,
-  },
+const teamMembers: TeamMember[] = [
+  { id: "aldebaro", name: "Prof. Aldebaro Klautau", imageSrc: "/aldebaro.webp" },
+  { id: "leonardo", name: "Prof. Leonardo Ramalho", imageSrc: "/leo-1.webp" },
+  { id: "joao", name: "João Ferreira", imageSrc: "/jvictorferreira.jpeg" },
+  { id: "valdinei", name: "Valdinei Conceição", imageSrc: "/ValdineiConceicao.webp" },
+  { id: "lucas", name: "Lucas Matni", imageSrc: "/lucasmatni.png" },
 ];
 
 export default function Home() {
+  const { dict } = useLanguage();
+
+  const courses: Course[] = [
+    {
+      title: dict.home.courses.dsp.title,
+      description: dict.home.courses.dsp.description,
+      link: "/digital-signal-processing",
+      icon: <Radio size={24} />,
+      accent: "primary",
+    },
+    {
+      title: dict.home.courses.ml.title,
+      description: dict.home.courses.ml.description,
+      link: "/machine-learning",
+      icon: <BrainCircuit size={24} />,
+      accent: "accent2",
+    },
+    {
+      title: dict.home.courses.dl.title,
+      description: dict.home.courses.dl.description,
+      link: "/deep-learning",
+      icon: <BrainCog size={24} />,
+      accent: "primary",
+    },
+    {
+      title: dict.home.courses.dc.title,
+      description: dict.home.courses.dc.description,
+      link: "/digital-communications",
+      icon: <SatelliteDish size={24} />,
+      accent: "accent2",
+    },
+  ];
+
   return (
     <>
-      <MaxWidthWrapper>
-        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 ">
-          <div className="mr-auto place-self-center lg:col-span-7">
-            <h1 className="max-w-2xl mb-4 text-4xl  tracking-tight leading-none md:text-5xl xl:text-6xl text-black ">
-              {" "}
-              Digital Signal Processing with
-              <span className="text-[#f0c538]"> Python,</span>
-              <span className="text-[#fcad36]"> Matlab</span> or
-              <span className="text-[#31ABCF]"> Octave</span>.
-            </h1>
-            <p className="max-w-2xl mb-6 text-[#686868] italic   lg:mb-8 md:text-lg lg:text-xl ">
-              “The information age brought new possibilities to improve the
-              learning process, which can complement the traditional lectures
-              and homeworks.”
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              <Button className={buttonVariants()}>
-                <span>
-                  <a href="https://ai6g.org/books/dsp/ak_dsp_book.html">
-                    Start reading
-                  </a>
-                </span>
-                <ArrowUpRight size={20} />
-              </Button>
-            </div>
+      <Hero />
+
+      <section id="courses" className="bg-secondary/40 py-20 sm:py-24">
+        <MaxWidthWrapper>
+          <SectionHeading eyebrow={dict.home.coursesEyebrow} title={dict.home.coursesTitle} />
+          <div className="mt-12">
+            <CourseGrid courses={courses} />
           </div>
-          <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <Image
-              src="/book_cover.png"
-              width={500}
-              height={500}
-              alt="book cover"
-            />
-          </div>
-        </div>
-      </MaxWidthWrapper>
-      <section className=" bg-gray-50 ">
-        <div className=" py-8 sm:py-16">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:text-center">
-              <h2 className="text-base font-semibold leading-7 text-indigo-600">
-                Learn more
-              </h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-black sm:text-4xl">
-                Courses
-              </p>
-            </div>
-            <div className="mx-auto mt-8 max-w-2xl sm:mt-20 lg:mt-8 lg:max-w-4xl">
-              <HoverEffect items={courses} />
-            </div>
-          </div>
-        </div>
+        </MaxWidthWrapper>
       </section>
-      <MaxWidthWrapper>
-        <div className="py-8 sm:py-16 text-center">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-black sm:text-4xl">
-              Meet the team
-            </p>
 
-            <p className="text-gray-600">
-              The team at LASSE is made up of visionaries who believe in
-              changing the world by...
-            </p>
+      <section className="py-20 sm:py-24">
+        <MaxWidthWrapper>
+          <SectionHeading
+            eyebrow={dict.home.teamEyebrow}
+            title={dict.home.teamTitle}
+            description={dict.home.teamDescription}
+          />
+          <p className="mt-4 text-center text-sm text-muted-foreground">{dict.home.teamHint}</p>
+          <div className="mt-12">
+            <TeamSection members={teamMembers} />
           </div>
-
-          <div className="flex flex-wrap justify-center space-x-0 md:space-x-6 overflow-hidden mt-8">
-            {teamMembers.map((member) => (
-              <div
-                key={member.name}
-                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 flex flex-col items-center"
-              >
-                <div className="w-48 h-48 bg-gray-200 rounded-full overflow-hidden">
-                  <Image
-                    src={member.imageSrc}
-                    alt={member.name}
-                    width={192}
-                    height={192}
-                    layout="responsive"
-                  />
-                </div>
-                <h3 className="font-semibold mt-4 text-black">{member.name}</h3>
-                <p className="text-gray-800">{member.role}</p>
-                <p className="text-gray-600 text-sm">{member.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </MaxWidthWrapper>
+        </MaxWidthWrapper>
+      </section>
     </>
   );
 }
